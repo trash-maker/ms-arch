@@ -1,0 +1,59 @@
+{
+  "name": "products-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/products-api/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/products-api",
+        "main": "apps/products-api/src/main.ts",
+        "tsConfig": "apps/products-api/tsconfig.app.json",
+        "assets": ["apps/products-api/src/assets"],
+        "webpackConfig": "apps/products-api/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "generateLockfile": true
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "products-api:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "products-api:build:development"
+        },
+        "production": {
+          "buildTarget": "products-api:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/products-api/jest.config.ts"
+      }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f apps/products-api/Dockerfile . -t products-api"
+    }
+  },
+  "tags": []
+}
