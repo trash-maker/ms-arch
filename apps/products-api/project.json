@@ -15,7 +15,8 @@
         "main": "apps/products-api/src/main.ts",
         "tsConfig": "apps/products-api/tsconfig.app.json",
         "assets": ["apps/products-api/src/assets"],
-        "webpackConfig": "apps/products-api/webpack.config.js"
+        "webpackConfig": "apps/products-api/webpack.config.js",
+        "generatePackageJson": true
       },
       "configurations": {
         "development": {},

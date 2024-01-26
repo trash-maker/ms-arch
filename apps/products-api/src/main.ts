@@ -302,6 +302,8 @@ const router = jsonServer.router(data);
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.get('/health', (req, res) => {
+  const address = server.address();
+  console.log('health check', address);
   res.json({ status: 'UP' });
 });
 
