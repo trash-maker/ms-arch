@@ -17,6 +17,16 @@ services:
       VIRTUAL_HOST: products-api.local
       VIRTUAL_PORT: 3000
       PORT: 3000
+  stock-api:
+    image: stock-api:latest
+    deploy:
+      replicas: 2
+    expose:
+      - 3000
+    environment:
+      VIRTUAL_HOST: stock-api.local
+      VIRTUAL_PORT: 3000
+      PORT: 3000
 
 networks:
   default:

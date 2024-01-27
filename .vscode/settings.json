@@ -1,6 +1,7 @@
 {
     "conventionalCommits.scopes": [
         "products",
-        "integration"
+        "integration",
+        "stock"
     ]
 }

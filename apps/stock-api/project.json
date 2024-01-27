@@ -1,0 +1,60 @@
+{
+  "name": "stock-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/stock-api/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/stock-api",
+        "main": "apps/stock-api/src/main.ts",
+        "tsConfig": "apps/stock-api/tsconfig.app.json",
+        "assets": ["apps/stock-api/src/assets"],
+        "webpackConfig": "apps/stock-api/webpack.config.js",
+        "generatePackageJson": true
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "generateLockfile": true
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "stock-api:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "stock-api:build:development"
+        },
+        "production": {
+          "buildTarget": "stock-api:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/stock-api/jest.config.ts"
+      }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f apps/stock-api/Dockerfile . -t stock-api"
+    }
+  },
+  "tags": []
+}
