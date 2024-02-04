@@ -1,0 +1,60 @@
+{
+  "name": "orders-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/orders-api/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/orders-api",
+        "main": "apps/orders-api/src/main.ts",
+        "tsConfig": "apps/orders-api/tsconfig.app.json",
+        "assets": ["apps/orders-api/src/assets"],
+        "webpackConfig": "apps/orders-api/webpack.config.js",
+        "generatePackageJson": true
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "generateLockfile": true
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "orders-api:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "orders-api:build:development"
+        },
+        "production": {
+          "buildTarget": "orders-api:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/orders-api/jest.config.ts"
+      }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f apps/orders-api/Dockerfile . -t orders-api"
+    }
+  },
+  "tags": []
+}

@@ -27,6 +27,21 @@ services:
       VIRTUAL_HOST: stock-api.local
       VIRTUAL_PORT: 3000
       PORT: 3000
+  orders-api:
+    image: orders-api:latest
+    deploy:
+      replicas: 1
+    expose:
+      - 3000
+    environment:
+      VIRTUAL_HOST: orders-api.local
+      VIRTUAL_PORT: 3000
+      PORT: 3000
+      PRODUCTS_API: http://products-api:3000/api
+      STOCK_API: http://stock-api:3000/api
+    depends_on:
+      - products-api
+      - stock-api
 
 networks:
   default:
