@@ -9,19 +9,13 @@ const data = {
   stock: [
     { 
       id: 1,
-      product: {
-        id: 1,
-        name: 'Settlers of Catan'
-      },
-      quantity: 5
+      price: 45.40,
+      quantity: 5,
     },
     { 
       id: 2,
-      product: {
-        id: 2,
-        name: 'Ticket to Ride',
-      },
-      quantity: 5
+      price: 35.05,
+      quantity: 3,
     }
   ],
 };
